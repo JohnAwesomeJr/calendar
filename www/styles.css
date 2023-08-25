@@ -1,95 +1,106 @@
-*{
-	padding:0px;
-	margin:0px;
+* {
+	padding: 0px;
+	margin: 0px;
 	box-sizing: border-box;
+	pointer-events: none;
+	user-select: none;
 }
-body{
-	height:100vh;
-	position:static;
-	overflow:hidden;
 
-	display:flex;
-	flex-direction:column;
-	justify-content:start;
-	align-items:start;
-	overflow:hidden;
+body {
+	height: 100vh;
+	position: static;
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	overflow: hidden;
 	border: solid red 4px;
-	
+
 }
-.page-menu{
-width:50%;
-height:fit-content;
-border: solid orange 4px;
+
+.page-menu {
+	width: 50%;
+	height: fit-content;
+	border: solid orange 4px;
 
 
 }
-.main-container{
-	width:100%;
-	flex-grow:1;
+
+.main-container {
+	width: 100%;
+	flex-grow: 1;
 	background: lightred;
 	border: solid orange 4px;
 
-	display:flex;
-	flex-direction:row;
-	justify-content:start;
-	align-items:start;
-	overflow:hidden;
-		
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: start;
+	overflow: hidden;
+
 }
-.calender-layout{
-	flex-grow:1;
+
+.calender-layout {
+	flex-grow: 1;
 	border: solid yellow 4px;
-	height:100%;
+	height: 100%;
 }
-.color-selector{
-	width:30%;
+
+.color-selector {
+	width: 30%;
 	min-width: 200px;
 	border: solid yellow 4px;
-	height:100%;
+	height: 100%;
 }
 
-.month-container{
-	display:flex;
-	flex-direction:column;
-	justify-content:start;
-	align-items:center;
+.month-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
 	border: solid green 4px;
-	overflow:hidden;
-		
-	width:calc(100% * 0.33);
-	height:calc(100% * 0.25);
+	overflow: hidden;
+
+	width: calc(100% * 0.33);
+	height: calc(100% * 0.25);
 }
-.month-title{
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
+
+.month-title {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	border: solid blue 4px;
-	width:100%;
-	height:fit-content;  
-	overflow:hidden;
+	width: 100%;
+	height: fit-content;
+	overflow: hidden;
 }
-.month-body{
-	flex-grow:1;
-    border: solid blue 4px; 
-	width:100%;	
-	overflow:hidden;
 
-	display:flex;
-	flex-direction:row;
+.month-body {
+	flex-grow: 1;
+	border: solid blue 4px;
+	width: 100%;
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content:start;
-	align-items:start;
+	justify-content: start;
+	align-items: start;
 
 }
-.month-day{
-	width:calc(100% * 0.1428571428571429);
-	height:calc(100% * 0.2);
+
+.month-day {
+	width: calc(100% * 0.1428571428571429);
+	height: calc(100% * 0.2);
 	border: solid purple 4px;
-	background:lightgreen;
-	overflow:hidden;
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
+	background: lightgreen;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	pointer-events: all;
 }
