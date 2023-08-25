@@ -31,7 +31,7 @@ function generateCalendar2WithBuffer($year = 2018) {
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    $calendar = '<div class="calender-layout">';
+    $calendar = '<div class="calendar-layout">';
     foreach ($months as $month) {
         $calendar .= '<div class="month-container">';
         $calendar .= '<div class="month-title">' . $month . ' ' . $year . '</div>';
@@ -43,14 +43,20 @@ function generateCalendar2WithBuffer($year = 2018) {
         // Get the day of the week the month starts on (0 = Sunday, 1 = Monday, etc.)
         $firstDayOfWeek = date('w', strtotime("$year-$month-01"));
 
-        // Add buffer days before the first day of the month
-        for ($i = 0; $i < $firstDayOfWeek; $i++) {
-            $calendar .= '<div class="month-day buffer-day"></div>';
-        }
+        // Calculate the total number of squares (35)
+        $totalSquares = 35;
 
-        // Loop through the days of the month
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            $calendar .= '<div class="month-day">' . $day . '</div>';
+        // Loop through the squares
+        for ($square = 1; $square <= $totalSquares; $square++) {
+            // Calculate the day to display
+            $day = $square - $firstDayOfWeek;
+
+            // If it's a buffer day, use a different class
+            if ($day <= 0 || $day > $daysInMonth) {
+                $calendar .= '<div class="month-day buffer-day"></div>';
+            } else {
+                $calendar .= '<div class="month-day">' . $day . '</div>';
+            }
         }
 
         $calendar .= '</div>'; // Close month-body
@@ -60,8 +66,6 @@ function generateCalendar2WithBuffer($year = 2018) {
 
     return $calendar;
 }
-
-
 
 ?>
 <body>
@@ -83,7 +87,7 @@ function generateCalendar2WithBuffer($year = 2018) {
 
 
             <?php 
-            $calendarHTML = generateCalendar2WithBuffer(2023);
+            $calendarHTML = generateCalendar2WithBuffer(2018);
             echo $calendarHTML;
             ?>
 
