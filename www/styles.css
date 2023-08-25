@@ -97,6 +97,9 @@ body {
 }
 
 .month-title {
+	color: white;
+	background: black;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
