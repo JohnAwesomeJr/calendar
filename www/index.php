@@ -56,20 +56,20 @@ function generateCalendar() {
 
 
         <div class="color-selector">
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
-        You cant put this to the test. <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
+        Mke! <br> <hr>
         </div>
 
 
