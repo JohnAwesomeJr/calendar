@@ -14,7 +14,7 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: start;
-	/* border: solid red 4px; */
+	border: solid red 4px;
 
 }
 
