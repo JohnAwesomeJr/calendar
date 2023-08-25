@@ -61,18 +61,65 @@ body {
 	}
 }
 
-.color-selector {
+.color-selector-menu {
 	width: 30%;
-	min-width: 200px;
+	min-width: 300px;
 	/* border: solid yellow 4px; */
 	height: 100%;
 }
 
 @media only screen and (max-width: 900px) {
-	.color-selector {
+	.color-selector-menu {
 		width: 0px;
 		min-width: 0px;
 	}
+}
+
+.color-selector-title {
+	background: black;
+	color: white;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.color-key {
+	height: 50px;
+	border-left: solid 2px black;
+	border-right: solid 2px black;
+	border-bottom: solid 2px black;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: start;
+}
+
+.color-key-color {
+	height: 100%;
+	width: 50px;
+	background: orange;
+	border-right: solid black 2px;
+	/* border: solid 3px orange; */
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.color-key-text {
+	height: 100%;
+	flex-grow: 1;
+	/* border: solid 3px orange; */
+
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
 }
 
 .month-container {

@@ -93,21 +93,32 @@ function generateCalendar2WithBuffer($year = 2018) {
 
 
 
-        <div class="color-selector">
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
-        Mke! <br> <hr>
+        <div class="color-selector-menu">
+            <div class="color-selector-title">Color Keys</div>
+
+
+            <div class="color-key">
+                <div class="color-key-color">
+                    color
+                </div>
+                <div class="color-key-text">
+                    form text
+                </div>
+            </div>
+
+
+            <div class="color-key">
+                <div class="color-key-color">
+                    color
+                </div>
+                <div class="color-key-text">
+                    form text
+                </div>
+            </div>
+
+
+
+
         </div>
 
 
