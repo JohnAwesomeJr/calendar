@@ -56,20 +56,20 @@ function generateCalendar() {
 
 
         <div class="color-selector">
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
-            I am the best <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
+        You cant put this to the test. <br> <hr>
         </div>
 
 
