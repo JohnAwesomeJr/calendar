@@ -14,14 +14,55 @@
 </head>
 <?php
 function generateCalendar() {
-    for ($day = 1; $day <= 35; $day++) {
-
-
+    for ($day = 1; $day <= 365; $day++) {
         echo '<div class="month-day">' . $day . '</div>';
-
-
     }
 }
+?>
+
+
+
+
+
+<?php
+function generateCalendar2WithBuffer($year = 2018) {
+    $months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    $calendar = '<div class="calender-layout">';
+    foreach ($months as $month) {
+        $calendar .= '<div class="month-container">';
+        $calendar .= '<div class="month-title">' . $month . ' ' . $year . '</div>';
+        $calendar .= '<div class="month-body">';
+        
+        // Get the number of days in the month
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, array_search($month, $months) + 1, $year);
+
+        // Get the day of the week the month starts on (0 = Sunday, 1 = Monday, etc.)
+        $firstDayOfWeek = date('w', strtotime("$year-$month-01"));
+
+        // Add buffer days before the first day of the month
+        for ($i = 0; $i < $firstDayOfWeek; $i++) {
+            $calendar .= '<div class="month-day buffer-day"></div>';
+        }
+
+        // Loop through the days of the month
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $calendar .= '<div class="month-day">' . $day . '</div>';
+        }
+
+        $calendar .= '</div>'; // Close month-body
+        $calendar .= '</div>'; // Close month-container
+    }
+    $calendar .= '</div>'; // Close year-container
+
+    return $calendar;
+}
+
+
+
 ?>
 <body>
     <div class="page-menu">
@@ -40,18 +81,11 @@ function generateCalendar() {
 
 
 
-        <div class="calender-layout">
 
-            <div class="month-container">
-                <div class="month-title">
-                    <span>Febuary</span>
-                </div>
-                <div class="month-body" id="calendar">
-                        <?php generateCalendar(); ?>
-                </div>
-            </div>
-
-        </div>
+            <?php 
+            $calendarHTML = generateCalendar2WithBuffer(2023);
+            echo $calendarHTML;
+            ?>
 
 
 
