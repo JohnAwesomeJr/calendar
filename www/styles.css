@@ -10,34 +10,32 @@
 body {
 	height: 100vh;
 	position: static;
-
 	display: flex;
 	flex-direction: column;
-	justify-content: start;
+	justify-content: center;
 	align-items: start;
 	/* border: solid red 4px; */
 
 }
 
 .page-menu {
-	width: 50%;
+	width: 100%;
 	height: fit-content;
+	padding: 20px;
 	/* border: solid orange 4px; */
-
-
+	overflow: visible;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .main-container {
 	width: 100%;
 	flex-grow: 1;
-	background: lightred;
 	/* border: solid orange 4px; */
 
 	display: flex;
 	flex-direction: row;
 	justify-content: start;
 	align-items: start;
-
 }
 
 .calendar-layout {
@@ -53,6 +51,15 @@ body {
 
 }
 
+@media only screen and (max-width: 900px) {
+	.calendar-layout {
+		overflow: scroll;
+		pointer-events: all;
+		z-index: 1000;
+		justify-content: center;
+		align-items: start;
+	}
+}
 
 .color-selector {
 	width: 30%;
@@ -76,6 +83,7 @@ body {
 	/* border: solid green 4px; */
 
 	width: calc(calc(100% - 120px) * 0.33);
+	max-width: 600px;
 	height: calc(calc(100% - 160px) * 0.25);
 	margin: 20px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -83,9 +91,8 @@ body {
 
 @media only screen and (max-width: 900px) {
 	.month-container {
-		margin: 3px;
-		width: calc(calc(100% - 18px) * 0.33);
-		height: calc(calc(100% - 24px) * 0.25);
+		width: calc(calc(100% - 18px));
+		height: 50vh;
 	}
 }
 
