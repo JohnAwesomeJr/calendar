@@ -137,6 +137,36 @@ function generateCalendar2WithBuffer($year = 2018) {
             });
         });
     </script>
+    <script>
+function adjustDivSize(elementId) {
+    const div = document.getElementById(elementId);
+    
+    if (!div) {
+        console.error(`Element with ID '${elementId}' not found.`);
+        return;
+    }
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    const safeAreaTop = window.safeArea?.insetTop || 0;
+    const safeAreaBottom = window.safeArea?.insetBottom || 0;
+
+    div.style.paddingTop = safeAreaTop + 'px';
+    div.style.paddingBottom = safeAreaBottom + 'px';
+    div.style.width = viewportWidth + 'px';
+    div.style.height = (viewportHeight - safeAreaTop - safeAreaBottom) + 'px';
+}
+
+window.addEventListener('resize', () => {
+    // Call the function with the ID of the element you want to resize
+    adjustDivSize('body'); // Replace 'my-div' with the ID of your element
+});
+
+// Call the function initially
+adjustDivSize('body'); // Replace 'my-div' with the ID of your element
+
+        </script>
 </body>
 </html>
 
