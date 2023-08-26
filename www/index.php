@@ -6,12 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML 5 Boilerplate</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-    /* Add CSS for selected days */
-    .month-day.selected {
-        background-color: red;
-    }
-    </style>
+
 </head>
 <?php
 function generateCalendar() {
@@ -129,34 +124,51 @@ function generateCalendar2WithBuffer($year = 2018) {
 
     </div>
     <script>
-    let selectedDivs = [];
-
     const divs = document.querySelectorAll('div[data-day-id]');
+    let lastClickedIndex = -1;
+    let isSelecting = false;
 
     divs.forEach((div, index) => {
         div.addEventListener('click', (event) => {
             if (event.shiftKey) {
-                const startIndex = divs.indexOf(selectedDivs[selectedDivs.length - 1]);
-                const endIndex = index;
+                isSelecting = true;
+                const minIndex = Math.min(lastClickedIndex, index);
+                const maxIndex = Math.max(lastClickedIndex, index);
 
-                selectedDivs = [];
-
-                for (let i = Math.min(startIndex, endIndex); i <= Math.max(startIndex, endIndex); i++) {
-                    divs[i].classList.add('selected');
-                    selectedDivs.push(divs[i]);
-                }
-            } else {
+                divs.forEach((d, i) => {
+                    if (i >= minIndex && i <= maxIndex) {
+                        d.classList.add('selected');
+                    }
+                });
+            } else if ((event.metaKey && navigator.platform.indexOf('Mac') !== -1) || event.ctrlKey) {
+                // Toggle the selected class for the clicked div
                 if (div.classList.contains('selected')) {
                     div.classList.remove('selected');
-                    selectedDivs.splice(selectedDivs.indexOf(div), 1);
                 } else {
                     div.classList.add('selected');
-                    selectedDivs.push(div);
+                }
+            } else {
+                isSelecting = false;
+                lastClickedIndex = index;
+
+                // Deselect all divs except the clicked one
+                divs.forEach((d, i) => {
+                    if (i !== index) {
+                        d.classList.remove('selected');
+                    }
+                });
+
+                if (div.classList.contains('selected')) {
+                    div.classList.remove('selected');
+                } else {
+                    div.classList.add('selected');
                 }
             }
         });
     });
     </script>
+
+
 
     <script>
     // This is to set the body size for iphone

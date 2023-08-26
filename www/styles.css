@@ -18,6 +18,11 @@ body {
 
 }
 
+.month-day.selected {
+	border: solid 4px rgb(188, 188, 221);
+	background: rgb(217, 246, 255);
+}
+
 .page-menu {
 	width: 100%;
 	height: fit-content;
