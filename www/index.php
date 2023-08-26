@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML 5 Boilerplate</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Add CSS for selected days */
-        .month-day.selected {
-            background-color: red;
-        }
+    /* Add CSS for selected days */
+    .month-day.selected {
+        background-color: red;
+    }
     </style>
 </head>
 <?php
@@ -55,7 +56,9 @@ function generateCalendar2WithBuffer($year = 2018) {
             if ($day <= 0 || $day > $daysInMonth) {
                 $calendar .= '<div class="month-day buffer-day"></div>';
             } else {
-                $calendar .= '<div class="month-day">' . $day . '</div>';
+                $monthNumber = date('m', strtotime($month));
+                $twoDigitDay = str_pad($day, 2, '0', STR_PAD_LEFT);
+                $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
             }
         }
 
@@ -68,6 +71,7 @@ function generateCalendar2WithBuffer($year = 2018) {
 }
 
 ?>
+
 <body>
     <div class="page-menu">
         <h1>Title</h1>
@@ -80,13 +84,13 @@ function generateCalendar2WithBuffer($year = 2018) {
         ?>
     </div>
 
-    
+
     <div class="main-container">
 
 
 
 
-            <?php 
+        <?php 
             $calendarHTML = generateCalendar2WithBuffer(2018);
             echo $calendarHTML;
             ?>
@@ -102,7 +106,7 @@ function generateCalendar2WithBuffer($year = 2018) {
                     color
                 </div>
                 <div class="color-key-text">
-                    form text
+                    I am the form text
                 </div>
             </div>
 
@@ -124,47 +128,53 @@ function generateCalendar2WithBuffer($year = 2018) {
 
 
     </div>
-
     <script>
-        // JavaScript code for selecting and deselecting days
-        const days = document.querySelectorAll('.month-day');
-        const selectedDays = [];
+    let selectedDivs = [];
 
-        days.forEach(day => {
-            day.addEventListener('click', () => {
-                if (day.classList.contains('selected')) {
-                    // Deselect the day
-                    day.classList.remove('selected');
-                    const index = selectedDays.indexOf(day.textContent);
-                    if (index !== -1) {
-                        selectedDays.splice(index, 1);
-                    }
-                } else {
-                    // Select the day
-                    day.classList.add('selected');
-                    selectedDays.push(day.textContent);
+    const divs = document.querySelectorAll('div[data-day-id]');
+
+    divs.forEach((div, index) => {
+        div.addEventListener('click', (event) => {
+            if (event.shiftKey) {
+                const startIndex = divs.indexOf(selectedDivs[selectedDivs.length - 1]);
+                const endIndex = index;
+
+                selectedDivs = [];
+
+                for (let i = Math.min(startIndex, endIndex); i <= Math.max(startIndex, endIndex); i++) {
+                    divs[i].classList.add('selected');
+                    selectedDivs.push(divs[i]);
                 }
-                console.log('Selected days:', selectedDays);
-            });
+            } else {
+                if (div.classList.contains('selected')) {
+                    div.classList.remove('selected');
+                    selectedDivs.splice(selectedDivs.indexOf(div), 1);
+                } else {
+                    div.classList.add('selected');
+                    selectedDivs.push(div);
+                }
+            }
         });
+    });
     </script>
+
     <script>
-        function adjustBodySize() {
-            const body = document.body;
+    // This is to set the body size for iphone
+    function adjustBodySize() {
+        const body = document.body;
 
-            const viewportHeight = window.innerHeight;
-            const safeAreaTop = window.safeArea?.insetTop || 0;
-            const safeAreaBottom = window.safeArea?.insetBottom || 0;
+        const viewportHeight = window.innerHeight;
+        const safeAreaTop = window.safeArea?.insetTop || 0;
+        const safeAreaBottom = window.safeArea?.insetBottom || 0;
 
-            body.style.paddingTop = safeAreaTop + 'px';
-            body.style.paddingBottom = safeAreaBottom + 'px';
-            body.style.height = (viewportHeight - safeAreaTop - safeAreaBottom) + 'px';
-        }
+        body.style.paddingTop = safeAreaTop + 'px';
+        body.style.paddingBottom = safeAreaBottom + 'px';
+        body.style.height = (viewportHeight - safeAreaTop - safeAreaBottom) + 'px';
+    }
 
-        window.addEventListener('resize', adjustBodySize);
-        adjustBodySize(); // Call it initially
-
+    window.addEventListener('resize', adjustBodySize);
+    adjustBodySize(); // Call it initially
     </script>
 </body>
-</html>
 
+</html>

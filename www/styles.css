@@ -120,6 +120,8 @@ body {
 	flex-direction: row;
 	justify-content: start;
 	align-items: center;
+	user-select: text;
+	pointer-events: auto;
 }
 
 .month-container {
@@ -172,10 +174,11 @@ body {
 .month-day {
 	width: calc(100% * 0.1428571428571429);
 	height: calc(100% * 0.2);
-	/* border: solid purple 4px; */
+	border: dotted lightgray 1px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	pointer-events: all;
+	cursor: pointer;
 }
