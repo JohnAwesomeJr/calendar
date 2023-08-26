@@ -40,7 +40,7 @@ function generateCalendar2WithBuffer($year = 2018) {
         $firstDayOfWeek = date('w', strtotime("$year-$month-01"));
 
         // Calculate the total number of squares (35)
-        $totalSquares = 35;
+        $totalSquares = 42;
 
         // Loop through the squares
         for ($square = 1; $square <= $totalSquares; $square++) {
@@ -123,13 +123,17 @@ function generateCalendar2WithBuffer($year = 2018) {
 
 
     </div>
+
     <script>
+    let selectedDataIds = [];
     const divs = document.querySelectorAll('div[data-day-id]');
     let lastClickedIndex = -1;
     let isSelecting = false;
 
     divs.forEach((div, index) => {
         div.addEventListener('click', (event) => {
+            const dataDayId = div.getAttribute('data-day-id'); // Get the data-day-id attribute
+
             if (event.shiftKey) {
                 isSelecting = true;
                 const minIndex = Math.min(lastClickedIndex, index);
@@ -138,14 +142,28 @@ function generateCalendar2WithBuffer($year = 2018) {
                 divs.forEach((d, i) => {
                     if (i >= minIndex && i <= maxIndex) {
                         d.classList.add('selected');
+                        // Add data-day-id to the selectedDataIds array
+                        const id = d.getAttribute('data-day-id');
+                        if (!selectedDataIds.includes(id)) {
+                            selectedDataIds.push(id);
+                        }
                     }
                 });
             } else if ((event.metaKey && navigator.platform.indexOf('Mac') !== -1) || event.ctrlKey) {
                 // Toggle the selected class for the clicked div
                 if (div.classList.contains('selected')) {
                     div.classList.remove('selected');
+                    // Remove data-day-id from the selectedDataIds array
+                    const idIndex = selectedDataIds.indexOf(dataDayId);
+                    if (idIndex !== -1) {
+                        selectedDataIds.splice(idIndex, 1);
+                    }
                 } else {
                     div.classList.add('selected');
+                    // Add data-day-id to the selectedDataIds array
+                    if (!selectedDataIds.includes(dataDayId)) {
+                        selectedDataIds.push(dataDayId);
+                    }
                 }
             } else {
                 isSelecting = false;
@@ -155,18 +173,35 @@ function generateCalendar2WithBuffer($year = 2018) {
                 divs.forEach((d, i) => {
                     if (i !== index) {
                         d.classList.remove('selected');
+                        // Remove data-day-id from the selectedDataIds array
+                        const idIndex = selectedDataIds.indexOf(d.getAttribute('data-day-id'));
+                        if (idIndex !== -1) {
+                            selectedDataIds.splice(idIndex, 1);
+                        }
                     }
                 });
 
                 if (div.classList.contains('selected')) {
                     div.classList.remove('selected');
+                    // Remove data-day-id from the selectedDataIds array
+                    const idIndex = selectedDataIds.indexOf(dataDayId);
+                    if (idIndex !== -1) {
+                        selectedDataIds.splice(idIndex, 1);
+                    }
                 } else {
                     div.classList.add('selected');
+                    // Add data-day-id to the selectedDataIds array
+                    if (!selectedDataIds.includes(dataDayId)) {
+                        selectedDataIds.push(dataDayId);
+                    }
                 }
             }
+
+            console.log(selectedDataIds); // Log the selectedDataIds array
         });
     });
     </script>
+
 
 
 

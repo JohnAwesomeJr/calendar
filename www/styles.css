@@ -178,7 +178,7 @@ body {
 
 .month-day {
 	width: calc(100% * 0.1428571428571429);
-	height: calc(100% * 0.2);
+	height: calc(100% * 0.1666666666);
 	border: dotted lightgray 1px;
 	display: flex;
 	flex-direction: column;
