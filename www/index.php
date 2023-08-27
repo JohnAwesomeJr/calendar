@@ -126,4 +126,4 @@ $jsonObject = '[
 
 </html>
 <script src="selectDays.js"></script>
-<script src="fitScreenIphone"></script>
+<script src="fitScreenIphone.js"></script>
