@@ -80,6 +80,7 @@ body {
 	align-items: start;
 	flex-wrap: wrap;
 	overflow: scroll;
+	pointer-events: auto;
 
 }
 
