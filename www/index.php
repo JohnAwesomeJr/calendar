@@ -22,18 +22,18 @@ function generateColorKeysFromJSON($jsonObject) {
     return $html;
 }
 // genarate calender
-function generateCalendar2WithBuffer($year = 2018) {
-    $months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
+$months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+];
+function generateCalendar2WithBuffer($year = 2018, $monthsArray) {
     $calendar = "";
-    foreach ($months as $month) {
+    foreach ($monthsArray as $month) {
         $calendar .= '<div class="month-container">';
         $calendar .= '<div class="month-title">' . $month . ' ' . $year . '</div>';
         $calendar .= '<div class="month-body">';
         // Get the number of days in the month
-        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, array_search($month, $months) + 1, $year);
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, array_search($month, $monthsArray) + 1, $year);
 
         // Get the day of the week the month starts on (0 = Sunday, 1 = Monday, etc.)
         $firstDayOfWeek = date('w', strtotime("$year-$month-01"));
@@ -107,7 +107,7 @@ $jsonObject = '[
         <div class="center-calender-layout">
             <div class="calendar-layout">
                 <?php 
-            $calendarHTML = generateCalendar2WithBuffer($year);
+            $calendarHTML = generateCalendar2WithBuffer($year, $months);
             echo $calendarHTML;
         ?>
             </div>
@@ -120,6 +120,11 @@ $jsonObject = '[
         </div>
     </div>
     <div class="month-tabs-menu">
+        <?php foreach ($months as $month): ?>
+        <div class="month-tabs-tab">
+            <?php echo $month; ?>
+        </div>
+        <?php endforeach; ?>
 
     </div>
 </body>
