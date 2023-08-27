@@ -1,38 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="styles.css">
-
-</head>
 <?php
-function generateCalendar() {
-    for ($day = 1; $day <= 365; $day++) {
-        echo '<div class="month-day">' . $day . '</div>';
+$year = 2023;
+function generateColorKeysFromJSON($jsonObject) {
+    // Decode the JSON object into a PHP associative array
+    $data = json_decode($jsonObject, true);
+    // Initialize an empty string to store the HTML
+    $html = '';
+    // Loop through the data and generate HTML for each item
+    foreach ($data as $item) {
+        // Sanitize inputs to prevent potential HTML or script injection
+        $colorKeyID = htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8');
+        $color = htmlspecialchars($item['color'], ENT_QUOTES, 'UTF-8');
+        $text = htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8');
+        $font_color = htmlspecialchars($item['fontColor'], ENT_QUOTES, 'UTF-8');
+        // Build the HTML structure for each item
+        $html .= '<div class="color-key" data-color="'.$color.'" data-color-key-id="' . $colorKeyID . '">';
+        $html .= '<div class="color-key-color" style="'.'background:' . $color . '; color:'.$font_color.';">' ."". '</div>';
+        $html .= '<input class="color-key-text" placeholder="' . $text . '">';
+        $html .= '</div>';
     }
+
+    return $html;
 }
-?>
-
-
-
-
-
-<?php
+// genarate calender
 function generateCalendar2WithBuffer($year = 2018) {
     $months = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
-
-    $calendar = '<div class="calendar-layout">';
+    $calendar = "";
     foreach ($months as $month) {
         $calendar .= '<div class="month-container">';
         $calendar .= '<div class="month-title">' . $month . ' ' . $year . '</div>';
         $calendar .= '<div class="month-body">';
-        
         // Get the number of days in the month
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, array_search($month, $months) + 1, $year);
 
@@ -56,172 +55,75 @@ function generateCalendar2WithBuffer($year = 2018) {
                 $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
             }
         }
-
         $calendar .= '</div>'; // Close month-body
         $calendar .= '</div>'; // Close month-container
     }
-    $calendar .= '</div>'; // Close year-container
-
     return $calendar;
 }
-
+// Example JSON data (you can replace this with your actual JSON data)
+$jsonObject = '[
+    {"id": 0, "color": "reset", "text": "reset", "fontColor": "black"},
+    {"id": 7, "color": "pink", "text": "", "fontColor": "black"},
+    {"id": 1, "color": "red", "text": "", "fontColor": "white"},
+    {"id": 13, "color": "darkred", "text": "", "fontColor": "white"},
+    {"id": 8, "color": "#ffd68a", "text": "", "fontColor": "black"},
+    {"id": 6, "color": "orange", "text": "", "fontColor": "white"},
+    {"id": 14, "color": "#ca6f00", "text": "", "fontColor": "white"},
+    {"id": 9, "color": "#ffffb9", "text": "", "fontColor": "black"},
+    {"id": 4, "color": "yellow", "text": "", "fontColor": "black"},
+    {"id": 15, "color": "#b5b500", "text": "", "fontColor": "white"},
+    {"id": 10, "color": "lightgreen", "text": "", "fontColor": "black"},
+    {"id": 2, "color": "green", "text": "", "fontColor": "white"},
+    {"id": 16, "color": "darkgreen", "text": "", "fontColor": "white"},
+    {"id": 11, "color": "lightblue", "text": "", "fontColor": "black"},
+    {"id": 3, "color": "blue", "text": "", "fontColor": "white"},
+    {"id": 17, "color": "darkblue", "text": "", "fontColor": "white"},
+    {"id": 12, "color": "#d657ff", "text": "", "fontColor": "black"},
+    {"id": 5, "color": "#e200ff", "text": "", "fontColor": "white"},
+    {"id": 18, "color": "#9a00ae", "text": "", "fontColor": "white"}
+]';
 ?>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $year ?> War Map</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 
 <body>
     <div class="page-menu">
-        <h1>Title</h1>
-        <?php
-        $dateString = "2018-01-01"; // Date in the format "YYYY-MM-DD"
-        $timestamp = strtotime($dateString);
-        $dayOfWeek = date("l", $timestamp); // "l" format gives the full day name
-
-        echo "The first day of January 2018 was a $dayOfWeek.";
-        ?>
+        <img src="consulting-logo.png" height=30>
+        <p style="margin: 0px 20px;"><?php echo $year ?> War Map calendar</p>
     </div>
-
-
     <div class="main-container">
-
-
-
-
-        <?php 
-            $calendarHTML = generateCalendar2WithBuffer(2018);
+        <div class="center-calender-layout">
+            <div class="calendar-layout">
+                <?php 
+            $calendarHTML = generateCalendar2WithBuffer($year);
             echo $calendarHTML;
-            ?>
-
-
-
+        ?>
+            </div>
+        </div>
         <div class="color-selector-menu">
             <div class="color-selector-title">Color Keys</div>
 
-
-            <div class="color-key">
-                <div class="color-key-color">
-                    color
-                </div>
-                <div class="color-key-text">
-                    I am the form text
-                </div>
-            </div>
-
-
-            <div class="color-key">
-                <div class="color-key-color">
-                    color
-                </div>
-                <div class="color-key-text">
-                    form text
-                </div>
-            </div>
-
-
-
+            <?php echo generateColorKeysFromJSON($jsonObject); ?>
 
         </div>
-
-
+    </div>
+    <div class="month-tabs-menu">
 
     </div>
-
-    <script>
-    let selectedDataIds = [];
-    const divs = document.querySelectorAll('div[data-day-id]');
-    let lastClickedIndex = -1;
-    let isSelecting = false;
-
-    divs.forEach((div, index) => {
-        div.addEventListener('click', (event) => {
-            const dataDayId = div.getAttribute('data-day-id'); // Get the data-day-id attribute
-
-            if (event.shiftKey) {
-                isSelecting = true;
-                const minIndex = Math.min(lastClickedIndex, index);
-                const maxIndex = Math.max(lastClickedIndex, index);
-
-                divs.forEach((d, i) => {
-                    if (i >= minIndex && i <= maxIndex) {
-                        d.classList.add('selected');
-                        // Add data-day-id to the selectedDataIds array
-                        const id = d.getAttribute('data-day-id');
-                        if (!selectedDataIds.includes(id)) {
-                            selectedDataIds.push(id);
-                        }
-                    }
-                });
-            } else if ((event.metaKey && navigator.platform.indexOf('Mac') !== -1) || event.ctrlKey) {
-                // Toggle the selected class for the clicked div
-                if (div.classList.contains('selected')) {
-                    div.classList.remove('selected');
-                    // Remove data-day-id from the selectedDataIds array
-                    const idIndex = selectedDataIds.indexOf(dataDayId);
-                    if (idIndex !== -1) {
-                        selectedDataIds.splice(idIndex, 1);
-                    }
-                } else {
-                    div.classList.add('selected');
-                    // Add data-day-id to the selectedDataIds array
-                    if (!selectedDataIds.includes(dataDayId)) {
-                        selectedDataIds.push(dataDayId);
-                    }
-                }
-            } else {
-                isSelecting = false;
-                lastClickedIndex = index;
-
-                // Deselect all divs except the clicked one
-                divs.forEach((d, i) => {
-                    if (i !== index) {
-                        d.classList.remove('selected');
-                        // Remove data-day-id from the selectedDataIds array
-                        const idIndex = selectedDataIds.indexOf(d.getAttribute('data-day-id'));
-                        if (idIndex !== -1) {
-                            selectedDataIds.splice(idIndex, 1);
-                        }
-                    }
-                });
-
-                if (div.classList.contains('selected')) {
-                    div.classList.remove('selected');
-                    // Remove data-day-id from the selectedDataIds array
-                    const idIndex = selectedDataIds.indexOf(dataDayId);
-                    if (idIndex !== -1) {
-                        selectedDataIds.splice(idIndex, 1);
-                    }
-                } else {
-                    div.classList.add('selected');
-                    // Add data-day-id to the selectedDataIds array
-                    if (!selectedDataIds.includes(dataDayId)) {
-                        selectedDataIds.push(dataDayId);
-                    }
-                }
-            }
-
-            console.log(selectedDataIds); // Log the selectedDataIds array
-        });
-    });
-    </script>
-
-
-
-
-    <script>
-    // This is to set the body size for iphone
-    function adjustBodySize() {
-        const body = document.body;
-
-        const viewportHeight = window.innerHeight;
-        const safeAreaTop = window.safeArea?.insetTop || 0;
-        const safeAreaBottom = window.safeArea?.insetBottom || 0;
-
-        body.style.paddingTop = safeAreaTop + 'px';
-        body.style.paddingBottom = safeAreaBottom + 'px';
-        body.style.height = (viewportHeight - safeAreaTop - safeAreaBottom) + 'px';
-    }
-
-    window.addEventListener('resize', adjustBodySize);
-    adjustBodySize(); // Call it initially
-    </script>
 </body>
 
 </html>
+<script src="selectDays.js"></script>
+<script src="fitScreenIphone"></script>
