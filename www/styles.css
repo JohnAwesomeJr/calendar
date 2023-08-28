@@ -263,3 +263,8 @@ body {
 	pointer-events: all;
 	cursor: pointer;
 }
+
+.today {
+	border: dashed red 3px;
+	border-radius: 50%;
+}

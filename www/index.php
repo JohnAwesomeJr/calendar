@@ -1,5 +1,7 @@
 <?php
 $year = 2023;
+
+
 function generateColorKeysFromJSON($jsonObject) {
     // Decode the JSON object into a PHP associative array
     $data = json_decode($jsonObject, true);
@@ -52,7 +54,14 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray) {
             } else {
                 $monthNumber = date('m', strtotime($month));
                 $twoDigitDay = str_pad($day, 2, '0', STR_PAD_LEFT);
-                $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
+                $todaysDate = date('Y-m-d');
+                $daysDate = $year . '-' .$monthNumber. '-' .$twoDigitDay;
+                if($todaysDate == $daysDate){
+                    $calendar .= '<div class="month-day today" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
+                } else {
+                    $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
+
+                }
             }
         }
         $calendar .= '</div>'; // Close month-body
