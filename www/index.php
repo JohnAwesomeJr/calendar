@@ -1,5 +1,18 @@
 <?php
+
+
+require_once "database-connect.php";
 $year = 2023;
+// SQL query to retrieve all days of a given year (in this case, 2023)
+$sql = " SELECT * FROM `myDb`.`days` WHERE YEAR(date) = '$year'; ";
+// Execute the query
+$result = $connection->query($sql);
+$data = $result->fetch_all(MYSQLI_ASSOC);
+// echo "<pre>";
+// print_r($data);
+// echo "</pre>";
+// Close the database connection
+$connection->close();
 
 
 function generateColorKeysFromJSON($jsonObject) {
@@ -28,7 +41,7 @@ $months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
-function generateCalendar2WithBuffer($year = 2018, $monthsArray) {
+function generateCalendar2WithBuffer($year = 2018, $monthsArray, $data) {
     $calendar = "";
     foreach ($monthsArray as $month) {
         $calendar .= '<div class="month-container">';
@@ -52,16 +65,32 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray) {
             if ($day <= 0 || $day > $daysInMonth) {
                 $calendar .= '<div class="month-day buffer-day"></div>';
             } else {
-                $monthNumber = date('m', strtotime($month));
                 $twoDigitDay = str_pad($day, 2, '0', STR_PAD_LEFT);
-                $todaysDate = date('Y-m-d');
-                $daysDate = $year . '-' .$monthNumber. '-' .$twoDigitDay;
-                if($todaysDate == $daysDate){
-                    $calendar .= '<div class="month-day today" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
-                } else {
-                    $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '">' . $day . '</div>';
+                $monthNumber = date('m', strtotime("$year-$month-01")); // Calculate the correct month number
 
+                $daysDate = $year . '-' . $monthNumber . '-' . $twoDigitDay;
+
+                // Check if there's color information for this date in the database
+                $color = ''; // Default background color
+                $textColor = ''; // Default text color
+                foreach ($data as $item) {
+                    if ($item['date'] == $daysDate) {
+                        $color = $item['color'];
+                        $textColor = $item['text-color'];
+                        break; // Stop searching when a match is found
+                    }
                 }
+
+                // Apply the background color and text color as inline styles, but only if there's a color specified
+                $dayStyle = '';
+                if (!empty($color)) {
+                    $dayStyle .= 'background-color: ' . $color . ';';
+                }
+                if (!empty($textColor)) {
+                    $dayStyle .= 'color: ' . $textColor . ';';
+                }
+
+                $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '" style="' . $dayStyle . '">' . $day . '</div>';
             }
         }
         $calendar .= '</div>'; // Close month-body
@@ -69,6 +98,10 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray) {
     }
     return $calendar;
 }
+
+
+
+
 // Example JSON data (you can replace this with your actual JSON data)
 $jsonObject = '[
     {"id": 0, "color": "reset", "text": "reset", "fontColor": "black"},
@@ -111,12 +144,19 @@ $jsonObject = '[
     <div class="page-menu">
         <img src="consulting-logo.png" height=30>
         <p style="margin: 0px 20px;"><?php echo $year ?> War Map calendar</p>
+        <button id="extractDataButton">Extract Data</button>
+
+        <!-- Hidden form field to store the extracted data as JSON -->
+        <form id="dataForm" method="POST" action="update-cal.php">
+            <textarea name="jsonData" id="jsonDataInput" style="display: none;"></textarea>
+            <input id="submit" type="submit" value="Submit Form">
+        </form>
     </div>
     <div class="main-container">
         <div class="center-calender-layout">
             <div class="calendar-layout">
                 <?php 
-            $calendarHTML = generateCalendar2WithBuffer($year, $months);
+            $calendarHTML = generateCalendar2WithBuffer($year, $months,$data);
             echo $calendarHTML;
         ?>
             </div>
@@ -141,3 +181,4 @@ $jsonObject = '[
 </html>
 <script src="selectDays.js"></script>
 <script src="fitScreenIphone.js"></script>
+<script src="extract-data.js"></script>

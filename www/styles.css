@@ -2,8 +2,8 @@
 	padding: 0px;
 	margin: 0px;
 	box-sizing: border-box;
-	pointer-events: none;
-	user-select: none;
+	/* pointer-events: none; */
+	/* user-select: none; */
 	overflow: hidden;
 }
 
