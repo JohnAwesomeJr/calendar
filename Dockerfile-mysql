@@ -1,1 +1,2 @@
 FROM mysql:8.0.33
+COPY my-custom.cnf /etc/mysql/conf.d/my-custom.cnf
