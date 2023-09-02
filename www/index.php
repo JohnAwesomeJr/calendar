@@ -8,35 +8,40 @@ $sql = " SELECT * FROM `myDb`.`days` WHERE YEAR(date) = '$year'; ";
 // Execute the query
 $result = $connection->query($sql);
 $data = $result->fetch_all(MYSQLI_ASSOC);
-// echo "<pre>";
-// print_r($data);
+
+$sql = " SELECT * FROM `myDb`.`colors`;";
+$result = $connection->query($sql);
+$colors = $result->fetch_all(MYSQLI_ASSOC);
+// echo "<pre style='width:500px;height:500px;background:white;overflow:scroll;position:fixed;bottom:0px;right:0px;z-index:2000;border:solid black 2px;padding:20px;'>";
+// print_r($colors);
 // echo "</pre>";
 // Close the database connection
 $connection->close();
 
 
-function generateColorKeysFromJSON($jsonObject)
+function generateColorKeysFromArray($dataArray)
 {
-    // Decode the JSON object into a PHP associative array
-    $data = json_decode($jsonObject, true);
     // Initialize an empty string to store the HTML
     $html = '';
+
     // Loop through the data and generate HTML for each item
-    foreach ($data as $item) {
+    foreach ($dataArray as $item) {
         // Sanitize inputs to prevent potential HTML or script injection
         $colorKeyID = htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8');
         $color = htmlspecialchars($item['color'], ENT_QUOTES, 'UTF-8');
         $text = htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8');
-        $font_color = htmlspecialchars($item['fontColor'], ENT_QUOTES, 'UTF-8');
+        $font_color = htmlspecialchars($item['text-color'], ENT_QUOTES, 'UTF-8');
+
         // Build the HTML structure for each item
         $html .= '<div class="color-key" data-color="' . $color . '" data-color-key-id="' . $colorKeyID . '">';
         $html .= '<div class="color-key-color" style="' . 'background:' . $color . '; color:' . $font_color . ';">' . "" . '</div>';
-        $html .= '<input class="color-key-text" placeholder="' . $text . '">';
+        $html .= '<input class="color-key-text" value="' . $text . '">';
         $html .= '</div>';
     }
 
     return $html;
 }
+
 // genarate calender
 $months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -201,7 +206,9 @@ $jsonObject = '[
         <div class="color-selector-menu">
             <div class="color-selector-title">Color Keys</div>
 
-            <?php echo generateColorKeysFromJSON($jsonObject); ?>
+            <?php
+            echo generateColorKeysFromArray($colors);;
+            ?>
 
         </div>
     </div>
