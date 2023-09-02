@@ -1,18 +1,18 @@
 <?php
+header("Location: /");
 // Check if the jsonData field is set in the POST request
-if (isset($_POST['jsonData'])) {
+if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
     // Get the JSON data from the POST request
     $jsonData = $_POST['jsonData'];
-    
+    // Get the year from the form input
+    $year = $_POST['yearData'];
+
     // Decode the JSON data into a PHP array
     $data = json_decode($jsonData, true);
-    
+
     // Check if the JSON data was successfully decoded
     if ($data !== null) {
         require_once "database-connect.php";
-
-        // Extract the year from the first item in the JSON (assuming all items have the same year)
-        $year = date('Y', strtotime($data[0]['date']));
 
         // Delete all rows for the specified year
         $deleteQuery = "DELETE FROM `myDb`.`days` WHERE YEAR(date) = '$year'";
@@ -43,7 +43,6 @@ if (isset($_POST['jsonData'])) {
         echo 'Failed to decode JSON data.';
     }
 } else {
-    // Handle case where jsonData is not set in the POST request
-    echo 'No JSON data received.';
+    // Handle case where jsonData or yearData is not set in the POST request
+    echo 'No JSON data or year data received.';
 }
-?>
