@@ -2,8 +2,8 @@
 	padding: 0px;
 	margin: 0px;
 	box-sizing: border-box;
-	/* pointer-events: none; */
-	/* user-select: none; */
+	pointer-events: none;
+	user-select: none;
 	overflow: hidden;
 }
 
@@ -26,6 +26,7 @@ body {
 	padding: 12px 20px; /* Add padding for better spacing */
 	cursor: pointer; /* Add a pointer cursor on hover */
 	transition: background-color 0.3s ease; /* Smooth background color transition */
+	pointer-events: auto;
   }
   
   #extractDataButton:hover {

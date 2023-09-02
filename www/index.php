@@ -1,8 +1,12 @@
 <?php
-
-
+$year = '';
+if ($_GET['year']) {
+    $year = $_GET['year'];
+} else {
+    $year = date("Y");
+    header("Location: ?year=$year");
+}
 require_once "database-connect.php";
-$year = 2023;
 // SQL query to retrieve all days of a given year (in this case, 2023)
 $sql = " SELECT * FROM `myDb`.`days` WHERE YEAR(date) = '$year'; ";
 // Execute the query
