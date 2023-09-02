@@ -1,5 +1,5 @@
 <?php
-$hostname = "calendar-calender_db-1";
+$hostname = "calender_db";
 $username = "user";
 $password = "test";
 $database = "myDb";
@@ -11,5 +11,3 @@ $connection = new mysqli($hostname, $username, $password, $database);
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
-
-?>
