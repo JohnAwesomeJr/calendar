@@ -194,6 +194,7 @@ $jsonObject = '[
         <!-- Hidden form field to store the extracted data as JSON -->
         <form id="dataForm" method="POST" action="update-cal.php">
             <textarea name="jsonData" id="jsonDataInput" style="display:none;"></textarea>
+            <textarea name="colorKeyData" id="colorKeyData" style="display:none;"></textarea>
             <input type="text" name="yearData" id="yearData" value="<?= $year; ?>" style="display:none;">
             <input id="submit" type="submit" value="Submit Form" style="display:none;">
         </form>
@@ -218,9 +219,9 @@ $jsonObject = '[
     </div>
     <div class="month-tabs-menu">
         <?php foreach ($months as $month) : ?>
-            <div class="month-tabs-tab">
-                <?php echo $month; ?>
-            </div>
+        <div class="month-tabs-tab">
+            <?php echo $month; ?>
+        </div>
         <?php endforeach; ?>
 
     </div>

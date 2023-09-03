@@ -4,6 +4,8 @@ header("Location: /");
 if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
     // Get the JSON data from the POST request
     $jsonData = $_POST['jsonData'];
+    $colorKeyData = $_POST['colorKeyData'];
+    echo $colorKeyData;
     // Get the year from the form input
     $year = $_POST['yearData'];
 
@@ -33,6 +35,40 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
                 echo "New row inserted successfully for date: $date<br>";
             } else {
                 echo "Error inserting new row for date: $date<br>";
+            }
+        }
+
+        $colorKeyDataDecode = json_decode($colorKeyData, true);
+        array_shift($colorKeyDataDecode);
+        $newItem = array(
+            array(
+            'id' => '0',  // Change '0' to the desired ID for the reset item
+            'background_color' => 'reset',  // Reset background color
+            'text_color' => 'reset',  // Reset text color
+            'text_value' => 'reset'  // Reset text value
+            )
+        );
+        $mergedArray = array_merge($newItem, $colorKeyDataDecode);
+        echo "<pre>";
+        print_r($mergedArray);
+        echo "</pre>";
+        
+
+        // Drop all rows from the "colors" table
+        $connection->query("DELETE FROM colors");
+
+        // Insert data from the JSON array
+        foreach ($mergedArray as $item) {
+            $id = $item['id'];
+            $color = $item['background_color'];
+            $text = $item['text_value'];
+            $textColor = $item['text_color'];
+
+            // Perform the INSERT operation
+            $insertQuery = "INSERT INTO myDb.colors ( color, text, `text-color`) VALUES ( '$color', '$text', '$textColor')";
+            
+            if ($connection->query($insertQuery) === false) {
+                echo "Error inserting data: " . $connection->error;
             }
         }
 
