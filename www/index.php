@@ -85,22 +85,25 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray, $data)
         for ($square = 1; $square <= $totalSquares; $square++) {
             // Calculate the day to display
             $day = $square - $firstDayOfWeek;
-
+        
             // Check if it's today's date
             $isToday = false;
             if ($day == date('j') && $month == date('F') && $year == date('Y')) {
                 $isToday = true;
             }
-
+        
+            // Check if it's a weekend (Saturday or Sunday)
+            $isWeekend = ($dayOfWeekCounter == 0 || $dayOfWeekCounter == 6);
+        
             // If it's a buffer day, use a different class
             if ($day <= 0 || $day > $daysInMonth) {
                 $calendar .= '<div class="month-day buffer-day"></div>';
             } else {
                 $twoDigitDay = str_pad($day, 2, '0', STR_PAD_LEFT);
                 $monthNumber = date('m', strtotime("$year-$month-01")); // Calculate the correct month number
-
+        
                 $daysDate = $year . '-' . $monthNumber . '-' . $twoDigitDay;
-
+        
                 // Check if there's color information for this date in the database
                 $color = ''; // Default background color
                 $textColor = ''; // Default text color
@@ -111,7 +114,7 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray, $data)
                         break; // Stop searching when a match is found
                     }
                 }
-
+        
                 // Apply the background color and text color as inline styles, but only if there's a color specified
                 $dayStyle = '';
                 if (!empty($color)) {
@@ -120,18 +123,21 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray, $data)
                 if (!empty($textColor)) {
                     $dayStyle .= 'color: ' . $textColor . ';';
                 }
-
+        
+                // Add the "month-day-weekend" class if it's a weekend
+                $dayClass = $isWeekend ? 'month-day-weekend' : '';
+        
                 // Add the day square with style and class
-                $calendar .= '<div class="month-day" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '" style="' . $dayStyle . '">';
-
+                $calendar .= '<div class="month-day ' . $dayClass . '" data-day-id="' . "$year-$monthNumber-$twoDigitDay" . '" style="' . $dayStyle . '">';
+        
                 // Add a transparent yellow div on top if it's today's date
                 if ($isToday) {
                     $calendar .= '<div class="today"></div>';
                 }
-
+        
                 $calendar .= $day . '</div>'; // Close month-day
             }
-
+        
             // Increment the day of the week counter and reset it if it's Sunday (6)
             $dayOfWeekCounter = ($dayOfWeekCounter + 1) % 7;
         }
