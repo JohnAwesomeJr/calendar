@@ -1,27 +1,7 @@
 <?php
-$year = '';
-if ($_GET['year']) {
-    $year = $_GET['year'];
-} else {
-    $year = date("Y");
-    header("Location: ?year=$year");
-}
+require_once('menus/footer.php');
+require_once('menus/header.php');
 require_once "database-connect.php";
-// SQL query to retrieve all days of a given year (in this case, 2023)
-$sql = " SELECT * FROM `myDb`.`days` WHERE YEAR(date) = '$year'; ";
-// Execute the query
-$result = $connection->query($sql);
-$data = $result->fetch_all(MYSQLI_ASSOC);
-
-$sql = " SELECT * FROM `myDb`.`colors`;";
-$result = $connection->query($sql);
-$colors = $result->fetch_all(MYSQLI_ASSOC);
-// echo "<pre style='width:500px;height:500px;background:white;overflow:scroll;position:fixed;bottom:0px;right:0px;z-index:2000;border:solid black 2px;padding:20px;'>";
-// print_r($colors);
-// echo "</pre>";
-// Close the database connection
-$connection->close();
-
 
 function generateColorKeysFromArray($dataArray)
 {
@@ -45,15 +25,12 @@ function generateColorKeysFromArray($dataArray)
 
     return $html;
 }
-
-// genarate calender
-$months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-];
-
-function generateCalendar2WithBuffer($year = 2018, $monthsArray, $data)
+function generateCalendar2WithBuffer($year = 2018, $data)
 {
+    $monthsArray = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
     $calendar = "";
     foreach ($monthsArray as $month) {
         $calendar .= '<div class="month-container">';
@@ -148,33 +125,21 @@ function generateCalendar2WithBuffer($year = 2018, $monthsArray, $data)
     return $calendar;
 }
 
+$year = '';
+if ($_GET['year']) {
+    $year = $_GET['year'];
+} else {
+    $year = date("Y");
+    header("Location: ?year=$year");
+}
 
-
-
-
-
-// Example JSON data (you can replace this with your actual JSON data)
-$jsonObject = '[
-{"id": 0, "color": "reset", "text": "reset", "fontColor": "black"},
-{"id": 7, "color": "pink", "text": "", "fontColor": "black"},
-{"id": 1, "color": "red", "text": "", "fontColor": "white"},
-{"id": 13, "color": "darkred", "text": "", "fontColor": "white"},
-{"id": 8, "color": "#ffd68a", "text": "", "fontColor": "black"},
-{"id": 6, "color": "orange", "text": "", "fontColor": "white"},
-{"id": 14, "color": "#ca6f00", "text": "", "fontColor": "white"},
-{"id": 9, "color": "#ffffb9", "text": "", "fontColor": "black"},
-{"id": 4, "color": "yellow", "text": "", "fontColor": "black"},
-{"id": 15, "color": "#b5b500", "text": "", "fontColor": "white"},
-{"id": 10, "color": "lightgreen", "text": "", "fontColor": "black"},
-{"id": 2, "color": "green", "text": "", "fontColor": "white"},
-{"id": 16, "color": "darkgreen", "text": "", "fontColor": "white"},
-{"id": 11, "color": "lightblue", "text": "", "fontColor": "black"},
-{"id": 3, "color": "blue", "text": "", "fontColor": "white"},
-{"id": 17, "color": "darkblue", "text": "", "fontColor": "white"},
-{"id": 12, "color": "#d657ff", "text": "", "fontColor": "black"},
-{"id": 5, "color": "#e200ff", "text": "", "fontColor": "white"},
-{"id": 18, "color": "#9a00ae", "text": "", "fontColor": "white"}
-]';
+$sql = " SELECT * FROM `myDb`.`days` WHERE YEAR(date) = '$year'; ";
+$result = $connection->query($sql);
+$data = $result->fetch_all(MYSQLI_ASSOC);
+$sql = " SELECT * FROM `myDb`.`colors`;";
+$result = $connection->query($sql);
+$colors = $result->fetch_all(MYSQLI_ASSOC);
+$connection->close();
 ?>
 
 
@@ -188,49 +153,43 @@ $jsonObject = '[
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $year ?> War Map</title>
+    <link rel="stylesheet" href="baseStyles.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="page-menu">
-        <img src="consulting-logo.png" height=30>
-        <p style="margin: 0px 20px;"><?php echo $year ?> War Map calendar</p>
-        <button id="extractDataButton">Save Changes</button>
-
-        <!-- Hidden form field to store the extracted data as JSON -->
-        <form id="dataForm" method="POST" action="update-cal.php">
-            <textarea name="jsonData" id="jsonDataInput" style="display:none;"></textarea>
-            <textarea name="colorKeyData" id="colorKeyData" style="display:none;"></textarea>
-            <input type="text" name="yearData" id="yearData" value="<?= $year; ?>" style="display:none;">
-            <input id="submit" type="submit" value="Submit Form" style="display:none;">
-        </form>
-    </div>
+    <form id="dataForm" method="POST" action="update-cal.php">
+        <textarea name="jsonData" id="jsonDataInput" style="display:none;"></textarea>
+        <textarea name="colorKeyData" id="colorKeyData" style="display:none;"></textarea>
+        <input type="text" name="yearData" id="yearData" value="<?= $year; ?>" style="display:none;">
+        <input id="submit" type="submit" value="Submit Form" style="display:none;">
+    </form>
+    <?php echo headerPanel($year); ?>
     <div class="main-container">
         <div class="center-calender-layout">
             <div class="calendar-layout">
                 <?php
-                $calendarHTML = generateCalendar2WithBuffer($year, $months, $data);
+                $calendarHTML = generateCalendar2WithBuffer($year, $data);
                 echo $calendarHTML;
                 ?>
             </div>
         </div>
         <div class="color-selector-menu">
             <div class="color-selector-title">Color Keys</div>
-
             <?php
             echo generateColorKeysFromArray($colors);;
             ?>
-
+            <div style="display:flex;
+                        justify-content: center;
+                        align-items: center; 
+                        padding:20px;">
+                <button id="extractDataButton">Save Changes</button>
+            </div>
         </div>
     </div>
-    <div class="month-tabs-menu">
-        <?php foreach ($months as $month) : ?>
-        <div class="month-tabs-tab">
-            <?php echo $month; ?>
-        </div>
-        <?php endforeach; ?>
-
-    </div>
+    <?php
+    makeFooter();
+    ?>
 </body>
 
 </html>

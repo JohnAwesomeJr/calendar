@@ -1,11 +1,9 @@
 <?php
-header("Location: /");
 // Check if the jsonData field is set in the POST request
 if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
     // Get the JSON data from the POST request
     $jsonData = $_POST['jsonData'];
     $colorKeyData = $_POST['colorKeyData'];
-    echo $colorKeyData;
     // Get the year from the form input
     $year = $_POST['yearData'];
 
@@ -19,7 +17,6 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
         // Delete all rows for the specified year
         $deleteQuery = "DELETE FROM `myDb`.`days` WHERE YEAR(date) = '$year'";
         if ($connection->query($deleteQuery) === TRUE) {
-            echo "All rows for the year $year deleted successfully<br>";
         } else {
             echo "Error deleting rows for the year $year<br>";
         }
@@ -32,7 +29,6 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
 
             $insertQuery = "INSERT INTO `myDb`.`days` (date, color, `text-color`) VALUES ('$date', '$backgroundColor', '$textColor')";
             if ($connection->query($insertQuery) === TRUE) {
-                echo "New row inserted successfully for date: $date<br>";
             } else {
                 echo "Error inserting new row for date: $date<br>";
             }
@@ -49,9 +45,7 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
             )
         );
         $mergedArray = array_merge($newItem, $colorKeyDataDecode);
-        echo "<pre>";
-        print_r($mergedArray);
-        echo "</pre>";
+
         
 
         // Drop all rows from the "colors" table
@@ -68,12 +62,13 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
             $insertQuery = "INSERT INTO myDb.colors ( color, text, `text-color`) VALUES ( '$color', '$text', '$textColor')";
             
             if ($connection->query($insertQuery) === false) {
-                echo "Error inserting data: " . $connection->error;
+                echo "Error inserting data: ";
             }
         }
 
         // Close the database connection
         $connection->close();
+        header('Location: /?year=' . $_POST["yearData"]);
     } else {
         // Handle JSON decoding error
         echo 'Failed to decode JSON data.';
