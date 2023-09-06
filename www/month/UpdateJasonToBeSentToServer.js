@@ -1,40 +1,38 @@
-function postData(inputId, endpoint) {
-    // Get the input element by its ID
-    const inputElement = document.getElementById(inputId);
 
-    if (!inputElement) {
-        console.error(`Input element with ID '${inputId}' not found.`);
-        return;
-    }
+// Function to create JSON from inputs in a square
+function createSquareJSON(square) {
+    const date = square.getAttribute('data-date');
+    const notes = square.querySelectorAll('.note');
+    const noteData = [];
 
-    // Get the value from the input element
-    const inputValue = inputElement.value;
+    notes.forEach(noteInput => {
+        const value = noteInput.value;
+        noteData.push({ date, note: value });
+    });
 
-    // Create an object with the data you want to send
-    const data = {
-        input: inputValue // You can structure your data as needed
-    };
-
-    // Make the POST request
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(responseData => {
-            // Handle the response data here
-            console.log('Response Data:', responseData);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    return JSON.stringify(noteData);
 }
-postData('myInput', 'https://example.com/api/endpoint');
+
+// Function to update the saveSquare input
+function updateSaveSquareInput() {
+    const focusedInput = document.querySelector('.note:focus');
+    if (focusedInput) {
+        const square = focusedInput.closest('.square');
+        const saveSquareInput = document.getElementById('saveSquare');
+
+        if (square && saveSquareInput) {
+            const squareJSON = createSquareJSON(square);
+            saveSquareInput.value = squareJSON;
+        }
+    }
+}
+
+// Timer to update the input after a 1-second pause
+let timer;
+document.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(updateSaveSquareInput, 1000);
+});
+
+// Event listener for focusing on different inputs
+document.addEventListener('focus', updateSaveSquareInput, true);

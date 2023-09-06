@@ -153,7 +153,7 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year,$month));
 </head>
 <pre
     style='width:500px;height:500px;background:white;overflow:scroll;position:fixed;bottom:0px;right:0px;z-index:2000;border:solid black 2px;padding:20px;pointer-events:auto;user-select: text;'>
-<textarea style='width:400px;height:300px;' id="saveSquare"></textarea>
+<textarea style='width:400px;height:300px;' name="saveSquare" id="saveSquare"></textarea>
 </pre>
 
 <body>
@@ -170,3 +170,4 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year,$month));
 <script src="/fitScreenIphone.js"></script>
 <script src="addEmptyInputs.js"></script>
 <script src="UpdateJasonToBeSentToServer.js"></script>
+<script src="uploadToServer.js"></script>
