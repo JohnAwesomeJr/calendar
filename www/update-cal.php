@@ -38,15 +38,18 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
         array_shift($colorKeyDataDecode);
         $newItem = array(
             array(
-            'id' => '0',  // Change '0' to the desired ID for the reset item
-            'background_color' => 'reset',  // Reset background color
-            'text_color' => 'reset',  // Reset text color
-            'text_value' => 'reset'  // Reset text value
+                'id' => '0',
+                // Change '0' to the desired ID for the reset item
+                'background_color' => 'reset',
+                // Reset background color
+                'text_color' => 'reset',
+                // Reset text color
+                'text_value' => 'reset' // Reset text value
             )
         );
         $mergedArray = array_merge($newItem, $colorKeyDataDecode);
 
-        
+
 
         // Drop all rows from the "colors" table
         $connection->query("DELETE FROM colors");
@@ -60,7 +63,7 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
 
             // Perform the INSERT operation
             $insertQuery = "INSERT INTO myDb.colors ( color, text, `text-color`) VALUES ( '$color', '$text', '$textColor')";
-            
+
             if ($connection->query($insertQuery) === false) {
                 echo "Error inserting data: ";
             }

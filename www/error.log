@@ -1,0 +1,30 @@
+[09-Sep-2023 16:30:32 UTC] Received JSON data: {"input":""}
+[09-Sep-2023 16:30:32 UTC] Decoded JSON data: Array
+(
+    [input] => 
+)
+
+[09-Sep-2023 16:30:35 UTC] Received JSON data: {"input":""}
+[09-Sep-2023 16:30:35 UTC] Decoded JSON data: Array
+(
+    [input] => 
+)
+
+[09-Sep-2023 16:31:00 UTC] Received JSON data: {"input":""}
+[09-Sep-2023 16:31:00 UTC] Decoded JSON data: Array
+(
+    [input] => 
+)
+
+[09-Sep-2023 16:31:03 UTC] Received JSON data: {"input":"[{\"date\":\"2023-01-03\",\"note\":\"I am the only note on this \"},{\"date\":\"2023-01-03\",\"note\":\"1\"},{\"date\":\"2023-01-03\",\"note\":\"2\"},{\"date\":\"2023-01-03\",\"note\":\"3\"},{\"date\":\"2023-01-03\",\"note\":\"4\"},{\"date\":\"2023-01-03\",\"note\":\"5\"},{\"date\":\"2023-01-03\",\"note\":\"6\"},{\"date\":\"2023-01-03\",\"note\":\"7\"},{\"date\":\"2023-01-03\",\"note\":\"\"}]"}
+[09-Sep-2023 16:31:03 UTC] Decoded JSON data: Array
+(
+    [input] => [{"date":"2023-01-03","note":"I am the only note on this "},{"date":"2023-01-03","note":"1"},{"date":"2023-01-03","note":"2"},{"date":"2023-01-03","note":"3"},{"date":"2023-01-03","note":"4"},{"date":"2023-01-03","note":"5"},{"date":"2023-01-03","note":"6"},{"date":"2023-01-03","note":"7"},{"date":"2023-01-03","note":""}]
+)
+
+[09-Sep-2023 16:32:18 UTC] Received JSON data: {"input":"[{\"date\":\"2023-01-03\",\"note\":\"I am the only note on this \"},{\"date\":\"2023-01-03\",\"note\":\"1\"},{\"date\":\"2023-01-03\",\"note\":\"2\"},{\"date\":\"2023-01-03\",\"note\":\"3\"},{\"date\":\"2023-01-03\",\"note\":\"4\"},{\"date\":\"2023-01-03\",\"note\":\"5\"},{\"date\":\"2023-01-03\",\"note\":\"6\"},{\"date\":\"2023-01-03\",\"note\":\"7\"},{\"date\":\"2023-01-03\",\"note\":\"\"}]"}
+[09-Sep-2023 16:32:18 UTC] Decoded JSON data: Array
+(
+    [input] => [{"date":"2023-01-03","note":"I am the only note on this "},{"date":"2023-01-03","note":"1"},{"date":"2023-01-03","note":"2"},{"date":"2023-01-03","note":"3"},{"date":"2023-01-03","note":"4"},{"date":"2023-01-03","note":"5"},{"date":"2023-01-03","note":"6"},{"date":"2023-01-03","note":"7"},{"date":"2023-01-03","note":""}]
+)
+

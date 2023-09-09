@@ -1,15 +1,18 @@
 <?php
 require_once('../menus/footer.php');
 require_once('../menus/header.php');
-function getAllNotes($year){
+function getAllNotes($year)
+{
     require_once "../database-connect.php";
     $sql = " SELECT * FROM `myDb`.`day-notes` WHERE YEAR(CAST(date AS DATE)) = $year;";
     $result = $connection->query($sql);
     $notes = $result->fetch_all(MYSQLI_ASSOC);
     $connection->close();
     return $notes;
-};
-function generateMonthDates($year, $month) {
+}
+;
+function generateMonthDates($year, $month)
+{
     // Create a date for the first day of the month
     $firstDay = new DateTime("$year-$month-01");
 
@@ -35,12 +38,13 @@ function generateMonthDates($year, $month) {
 
     // Add blank dates to the end of the array
     for ($i = 0; $i < $remainingBlankDays; $i++) {
-    $dates[] = '';
+        $dates[] = '';
     }
 
     return $dates;
 }
-function addTitlesToMonth($year,$month){
+function addTitlesToMonth($year, $month)
+{
     $daysOfWeek = array(
         'Sunday',
         'Monday',
@@ -50,10 +54,11 @@ function addTitlesToMonth($year,$month){
         'Friday',
         'Saturday'
     );
-    $monthWithTitles = array_merge($daysOfWeek, generateMonthDates($year,$month));
+    $monthWithTitles = array_merge($daysOfWeek, generateMonthDates($year, $month));
     return $monthWithTitles;
 }
-function createNewArray($notes, $calendar) {
+function createNewArray($notes, $calendar)
+{
     $newArray = array();
     $currentType = "";
 
@@ -81,24 +86,27 @@ function createNewArray($notes, $calendar) {
 
     return $newArray;
 }
-function buildCalendar($dataArray) {
+function buildCalendar($dataArray)
+{
     $uniqueIdentafier = 0;
-    foreach($dataArray as $square){
-        if( $square['type'] == 'title'){
-            echo '<div class="square title-day">' . $square['data']. "</div>";
-        };
-        if( $square['type'] == 'buffer'){
+    foreach ($dataArray as $square) {
+        if ($square['type'] == 'title') {
+            echo '<div class="square title-day">' . $square['data'] . "</div>";
+        }
+        ;
+        if ($square['type'] == 'buffer') {
             echo '<div class="square buffer-day"></div>';
-        };
-        if( $square['type'] == 'date'){
-            echo '<div class="square" data-date="'.$square['date'].'" data-uniqueIdentafier="'.$uniqueIdentafier.'">';
+        }
+        ;
+        if ($square['type'] == 'date') {
+            echo '<div class="square" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
             echo '<div class="note-holder">';
-            
+
             if (empty($square['data'])) {
                 // If $square['data'] is empty, add a default input
                 echo '<input class="note" value="">';
             } else {
-                foreach($square['data'] as $note){
+                foreach ($square['data'] as $note) {
                     echo '<input class="note" value="' . $note['text'] . '">';
                 }
                 echo '<input class="note" value="">';
@@ -107,7 +115,8 @@ function buildCalendar($dataArray) {
             echo '</div>';
 
             echo '</div>';
-        };
+        }
+        ;
         $uniqueIdentafier = $uniqueIdentafier + 1;
     }
 }
@@ -129,12 +138,7 @@ if ($_GET['month']) {
     header("Location: $currentURL&month=$month");
 }
 $fullMonthName = date("F", strtotime("2023-$month-01"));
-$calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year,$month));
-// echo "<pre style='width:500px;height:500px;background:white;overflow:scroll;position:fixed;bottom:0px;right:0px;z-index:2000;border:solid black 2px;padding:20px;pointer-events:auto;user-select: text;'>";
-// print_r($calendar);
-// // print_r(getAllNotes());
-// // print_r(addTitlesToMonth($year,$month));
-// echo "</pre>";
+$calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year, $month));
 ?>
 
 
@@ -147,14 +151,13 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year,$month));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $fullMonthName .' ' . $year ?> War Map</title>
+    <title>
+        <?php echo $fullMonthName . ' ' . $year ?> War Map
+    </title>
     <link rel="stylesheet" href="/baseStyles.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<pre
-    style='width:500px;height:500px;background:white;overflow:scroll;position:fixed;bottom:0px;right:0px;z-index:2000;border:solid black 2px;padding:20px;pointer-events:auto;user-select: text;'>
-<textarea style='width:400px;height:300px;' name="saveSquare" id="saveSquare"></textarea>
-</pre>
+<textarea style='display:none' name="saveSquare" id="saveSquare"></textarea>
 
 <body>
     <?php echo headerPanel($year); ?>
@@ -169,5 +172,5 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year,$month));
 </html>
 <script src="/fitScreenIphone.js"></script>
 <script src="addEmptyInputs.js"></script>
-<script src="UpdateJasonToBeSentToServer.js"></script>
 <script src="uploadToServer.js"></script>
+<script src="UpdateJasonToBeSentToServer.js"></script>

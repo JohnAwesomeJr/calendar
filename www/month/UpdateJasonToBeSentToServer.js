@@ -23,6 +23,7 @@ function updateSaveSquareInput() {
         if (square && saveSquareInput) {
             const squareJSON = createSquareJSON(square);
             saveSquareInput.value = squareJSON;
+            postData('saveSquare', '/month/uploadToServer.php');
         }
     }
 }
@@ -31,7 +32,7 @@ function updateSaveSquareInput() {
 let timer;
 document.addEventListener('input', () => {
     clearTimeout(timer);
-    timer = setTimeout(updateSaveSquareInput, 1000);
+    timer = setTimeout(updateSaveSquareInput, 100);
 });
 
 // Event listener for focusing on different inputs
