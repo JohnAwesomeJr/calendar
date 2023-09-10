@@ -15,8 +15,11 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
         require_once "database-connect.php";
 
         // Delete all rows for the specified year
-        $deleteQuery = "DELETE FROM `myDb`.`days` WHERE YEAR(date) = '$year'";
-        if ($connection->query($deleteQuery) === TRUE) {
+        $deleteQuery = "DELETE FROM `myDb`.`days` WHERE YEAR(date) = ?";
+        $stmt = $connection->prepare($deleteQuery);
+        $stmt->bind_param("s", $year);
+
+        if ($stmt->execute() === TRUE) {
         } else {
             echo "Error deleting rows for the year $year<br>";
         }
@@ -27,8 +30,11 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
             $backgroundColor = $item['backgroundColor'];
             $textColor = $item['textColor'];
 
-            $insertQuery = "INSERT INTO `myDb`.`days` (date, color, `text-color`) VALUES ('$date', '$backgroundColor', '$textColor')";
-            if ($connection->query($insertQuery) === TRUE) {
+            $insertQuery = "INSERT INTO `myDb`.`days` (date, color, `text-color`) VALUES (?, ?, ?)";
+            $stmt = $connection->prepare($insertQuery);
+            $stmt->bind_param("sss", $date, $backgroundColor, $textColor);
+
+            if ($stmt->execute() === TRUE) {
             } else {
                 echo "Error inserting new row for date: $date<br>";
             }
@@ -49,8 +55,6 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
         );
         $mergedArray = array_merge($newItem, $colorKeyDataDecode);
 
-
-
         // Drop all rows from the "colors" table
         $connection->query("DELETE FROM colors");
 
@@ -62,9 +66,11 @@ if (isset($_POST['jsonData']) && isset($_POST['yearData'])) {
             $textColor = $item['text_color'];
 
             // Perform the INSERT operation
-            $insertQuery = "INSERT INTO myDb.colors ( color, text, `text-color`) VALUES ( '$color', '$text', '$textColor')";
+            $insertQuery = "INSERT INTO myDb.colors ( color, text, `text-color`) VALUES (?, ?, ?)";
+            $stmt = $connection->prepare($insertQuery);
+            $stmt->bind_param("sss", $color, $text, $textColor);
 
-            if ($connection->query($insertQuery) === false) {
+            if ($stmt->execute() === false) {
                 echo "Error inserting data: ";
             }
         }

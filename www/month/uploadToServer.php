@@ -12,23 +12,27 @@ $finalOutput = "";
 
 require_once "../database-connect.php";
 
-$deleteQuery = "DELETE FROM `myDb`.`day-notes` WHERE DATE(date) = '$date'";
-if ($connection->query($deleteQuery) === TRUE) {
+// Use prepared statement for deleting rows
+$deleteQuery = "DELETE FROM `myDb`.`day-notes` WHERE DATE(date) = ?";
+$stmt = $connection->prepare($deleteQuery);
+$stmt->bind_param("s", $date);
+
+if ($stmt->execute() === TRUE) {
 } else {
-    echo "Error deleting rows for the year $year<br>";
+    echo "Error deleting rows for the date: $date<br>";
 }
 
-
 foreach ($finishedArray as $note) {
-    $queryIntro = "INSERT INTO `myDb`.`day-notes` (date, text) VALUES";
-    $finalQuery = "";
-    $finalQuery = $finalQuery . $queryIntro . " ('" . $date . "','" . $note['note'] . "');";
-    if ($connection->query($finalQuery) === TRUE) {
+    // Use prepared statement for inserting rows
+    $insertQuery = "INSERT INTO `myDb`.`day-notes` (date, text) VALUES (?, ?)";
+    $stmt = $connection->prepare($insertQuery);
+    $stmt->bind_param("ss", $date, $note['note']);
+
+    if ($stmt->execute() === TRUE) {
     } else {
         echo "Error inserting new row for date: $date<br>";
     }
 }
-
 
 // Save the JSON data to the file
 file_put_contents($file_path, $finalOutput);
