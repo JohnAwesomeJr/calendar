@@ -99,8 +99,35 @@ function buildCalendar($dataArray)
         }
         ;
         if ($square['type'] == 'date') {
-            echo '<div class="square" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+            $currentDateTime = new DateTime(date("Y-m-d"));
+            $date = new DateTime($square['date']);
+            $dayOfWeek = (int) $date->format('w');
+            if ($date < $currentDateTime) {
+                // The target date has already passed
+                echo '<div class="square datepassed" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+            } else {
+                // The target date is in the future
+                // Check if it's a weekend (Saturday or Sunday)
+                if ($dayOfWeek === 0 || $dayOfWeek === 6) {
+                    if ($currentDateTime == $date) {
+                        echo '<div class="square weekend today" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                    } else {
+                        echo '<div class="square weekend" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                    }
+                } else {
+                    if ($currentDateTime == $date) {
+                        echo '<div class="square today" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                    } else {
+                        echo '<div class="square" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                    }
+                }
+            }
+
+            $date = strtotime($square['date']); // Convert the string to a timestamp
+            $day = date("d", $date); // Format the timestamp to extract the day
+            echo '<div class="dateSquare date">' . $day . '</div>';
             echo '<div class="note-holder">';
+
 
             if (empty($square['data'])) {
                 // If $square['data'] is empty, add a default input
@@ -109,7 +136,7 @@ function buildCalendar($dataArray)
                 foreach ($square['data'] as $note) {
                     echo '<input class="note" value="' . $note['text'] . '">';
                 }
-                echo '<input class="note" value="">';
+                echo '<input class="note input" value="">';
             }
 
             echo '</div>';
@@ -174,3 +201,4 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year, $month));
 <script src="addEmptyInputs.js"></script>
 <script src="uploadToServer.js"></script>
 <script src="UpdateJasonToBeSentToServer.js"></script>
+<script src="hideDates.js"></script>
