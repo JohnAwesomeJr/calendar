@@ -36,13 +36,15 @@
 }
 
 .datepassed {
-    background: rgb(45, 45, 45);
+    background: rgb(237, 237, 237);
     transition: background 0.3s;
+    border-bottom: solid rgb(218, 216, 216) 1px;
+    border-right: solid rgb(218, 216, 216) 1px;
 
 }
 
 .datepassed:hover {
-    background: rgb(197, 197, 197);
+    background: rgb(255, 255, 255);
 }
 
 .dateSquare {
@@ -75,6 +77,11 @@
     height: 100%;
     overflow-y: scroll;
 
+}
+
+.datepassed>.note-holder>input {
+    color: rgb(191, 191, 191);
+    border-bottom: dotted rgb(195, 195, 195) 1px;
 }
 
 .note {
