@@ -41,12 +41,16 @@
     border-bottom: solid rgb(218, 216, 216) 1px;
     border-right: solid rgb(218, 216, 216) 1px;
 }
+
+/* START Date has passed and it is the weekend */
 .datepassed.weekend{
-    background: rgb(145, 145, 145);
+    background: rgb(212, 212, 212);
 }
 .datepassed.weekend>.note-holder>input {
     color: rgb(68, 68, 68);
 }
+/* END Date has passed and it is the weekend */
+
 
 .datepassed:hover {
     background: rgb(255, 255, 255);
