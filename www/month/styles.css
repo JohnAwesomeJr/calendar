@@ -42,11 +42,9 @@
     border-right: solid rgb(218, 216, 216) 1px;
 }
 .datepassed.weekend{
-    background: rgb(170, 170, 170);
+    background: rgb(145, 145, 145);
 }
-.datepassed.weekend>.note-holder>input{
-    color: rgb(0, 0, 0);
-}
+
 
 .datepassed:hover {
     background: rgb(255, 255, 255);
