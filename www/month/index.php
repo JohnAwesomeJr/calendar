@@ -104,7 +104,11 @@ function buildCalendar($dataArray)
             $dayOfWeek = (int) $date->format('w');
             if ($date < $currentDateTime) {
                 // The target date has already passed
-                echo '<div class="square datepassed" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                if ($dayOfWeek === 0 || $dayOfWeek === 6) {
+                    echo '<div class="square datepassed weekend" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                } else{
+                    echo '<div class="square datepassed" data-date="' . $square['date'] . '" data-uniqueIdentafier="' . $uniqueIdentafier . '">';
+                }
             } else {
                 // The target date is in the future
                 // Check if it's a weekend (Saturday or Sunday)
