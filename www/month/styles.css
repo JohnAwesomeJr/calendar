@@ -44,7 +44,7 @@
 
 /* START Date has passed and it is the weekend */
 .datepassed.weekend{
-    background: rgb(212, 212, 212);
+    background: rgb(145, 145, 145);
 }
 .datepassed.weekend>.note-holder>input {
     color: rgb(68, 68, 68);
