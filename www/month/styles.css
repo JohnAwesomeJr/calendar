@@ -42,7 +42,7 @@
     border-right: solid rgb(218, 216, 216) 1px;
 }
 .datepassed.weekend{
-    background: rgb(218, 218, 218);
+    background: rgb(170, 170, 170);
 }
 
 .datepassed:hover {
