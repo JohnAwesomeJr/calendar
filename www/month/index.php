@@ -206,3 +206,5 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year, $month));
 <script src="uploadToServer.js"></script>
 <script src="UpdateJasonToBeSentToServer.js"></script>
 <script src="hideDates.js"></script>
+<script src="hideScrollBars.js"></script>
+
