@@ -23,14 +23,17 @@ if ($stmt->execute() === TRUE) {
 }
 
 foreach ($finishedArray as $note) {
-    // Use prepared statement for inserting rows
-    $insertQuery = "INSERT INTO `myDb`.`day-notes` (date, text) VALUES (?, ?)";
-    $stmt = $connection->prepare($insertQuery);
-    $stmt->bind_param("ss", $date, $note['note']);
+    if (!empty($note['note'])) { // Check if the 'note' field is not empty
+        // Use prepared statement for inserting rows
+        $insertQuery = "INSERT INTO `myDb`.`day-notes` (date, text) VALUES (?, ?)";
+        $stmt = $connection->prepare($insertQuery);
+        $stmt->bind_param("ss", $date, $note['note']);
 
-    if ($stmt->execute() === TRUE) {
-    } else {
-        echo "Error inserting new row for date: $date<br>";
+        if ($stmt->execute() === TRUE) {
+            // Successfully inserted the row
+        } else {
+            echo "Error inserting new row for date: $date<br>";
+        }
     }
 }
 
