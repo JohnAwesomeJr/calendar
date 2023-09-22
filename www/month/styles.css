@@ -21,32 +21,44 @@
 
 .square {
     position: relative;
-    border-bottom: solid black 1px;
-    border-right: solid black 1px;
+    /* border-bottom: solid black 1px; */
+    /* border-right: solid black 1px; */
     pointer-events: auto;
 
     /* border: solid orange 2px; */
     width: calc(100% / 7);
     height: calc(100% / 7);
+    box-shadow: inset 9px 9px 20px 0px #00000017;
+    border:solid 1px rgb(236, 236, 236);
+    
 
 }
 
 
 .weekend {
-    background: rgb(178, 178, 178);
+    background: rgb(145, 179, 192);
+}
+.datepassed.weekend{
+    background: rgb(99, 122, 131);
+}
+.weekend:hover{
+    background: rgb(255, 255, 255);
+}
+.datepassed.weekend>.note-holder>input{
+    border: dotted 1px rgb(65, 79, 83);
+}
+.weekend>.note-holder>input {
+    border: dotted 1px rgb(97, 114, 121);
 }
 
 .datepassed {
-    background: rgb(237, 237, 237);
+    background: rgb(211, 211, 211);
     transition: background 0.3s;
-    border-bottom: solid rgb(218, 216, 216) 1px;
-    border-right: solid rgb(218, 216, 216) 1px;
+    /* border-bottom: solid rgb(218, 216, 216) 1px; */
+    /* border-right: solid rgb(218, 216, 216) 1px; */
 }
 
 /* START Date has passed and it is the weekend */
-.datepassed.weekend{
-    background: rgb(145, 145, 145);
-}
 .datepassed.weekend>.note-holder>input {
     color: rgb(68, 68, 68);
 }
@@ -62,18 +74,20 @@
     background: white;
     top: 0px;
     left: 0px;
-    border: solid black 1px;
-    border-top: none;
-    border-left: none;
+    /* border: solid black 1px; */
+    box-shadow: 9px 9px 20px 0px #00000049
+    /* border-top: none; */
+    /* border-left: none; */
 }
 
 .today {
-    border: solid red 2px;
+    box-shadow: inset 0px 0px 20px 2px #ffee004d;
 }
+
 
 .date {
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .date.hidden {
