@@ -27,7 +27,7 @@
 </style>
 
 <pre id="adminWindow">
-    <textarea style='width:400px;height:300px;pointer-events: auto;user-select: text;' name="saveSquare" id="saveSquare"></textarea>
+    <?= print_r($calendar);?>
 </pre>
 
 <div id="open-admin-menu" class="admin-menu-button" style="z-index:4000; background:green;">Open</div>

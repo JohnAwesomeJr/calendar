@@ -1,6 +1,7 @@
 <?php
 require_once('../menus/footer.php');
 require_once('../menus/header.php');
+
 function getAllNotes($year)
 {
     require_once "../database-connect.php";
@@ -10,7 +11,6 @@ function getAllNotes($year)
     $connection->close();
     return $notes;
 }
-;
 function generateMonthDates($year, $month)
 {
     // Create a date for the first day of the month
@@ -194,7 +194,8 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year, $month));
     <?php echo headerPanel($year); ?>
     <div class="main-container">
         <div class="day-container">
-            <?php buildCalendar($calendar); ?>
+
+<?php buildCalendar($calendar); ?>
         </div>
     </div>
     <?php makeFooter(); ?>
@@ -207,4 +208,6 @@ $calendar = createNewArray(getAllNotes($year), addTitlesToMonth($year, $month));
 <script src="UpdateJasonToBeSentToServer.js"></script>
 <script src="hideDates.js"></script>
 <script src="hideScrollBars.js"></script>
+
+<?php require_once('../menus/adminMenu.php'); ?>
 
